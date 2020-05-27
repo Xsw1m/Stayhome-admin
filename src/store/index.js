@@ -37,9 +37,9 @@ const store = new Vuex.Store({
   },
   actions: {
     getunfinished() {
-      fetchTable(this.state.listunfinished).then(response => {
-        this.state.news = response.result.total
-      })
+      // fetchTable(this.state.listunfinished).then(response => {
+      //   this.state.news = response.result.total
+      // })
       fetchMessage().then(response => {
         this.state.unread = response.result.total
       })

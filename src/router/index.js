@@ -211,25 +211,25 @@ export const asyncRoutes = [
         component: () => import('@/views/select/select'),
         name: 'select',
         meta: { title: '精选列表', icon: 'drag' }
-      },
-      {
-        path: 'audit/show',
-        component: () => import('@/views/audit/show'),
-        name: 'AuditShow',
-        meta: { title: '观看审核', icon: 'eye-open' }
-      },
-      {
-        path: 'audit/download',
-        component: () => import('@/views/audit/download'),
-        name: 'AuditDownload',
-        meta: { title: '下载审核', icon: 'guide' }
-      },
-      {
-        path: 'share',
-        component: () => import('@/views/share/share'),
-        name: 'share',
-        meta: { title: '分享审核', icon: 'link' }
       }
+      // {
+      //   path: 'audit/show',
+      //   component: () => import('@/views/audit/show'),
+      //   name: 'AuditShow',
+      //   meta: { title: '观看审核', icon: 'eye-open' }
+      // },
+      // {
+      //   path: 'audit/download',
+      //   component: () => import('@/views/audit/download'),
+      //   name: 'AuditDownload',
+      //   meta: { title: '下载审核', icon: 'guide' }
+      // },
+      // {
+      //   path: 'share',
+      //   component: () => import('@/views/share/share'),
+      //   name: 'share',
+      //   meta: { title: '分享审核', icon: 'link' }
+      // }
     ]
   },
   {

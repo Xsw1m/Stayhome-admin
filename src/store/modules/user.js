@@ -36,9 +36,9 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        // console.log(response.result)
-        commit('SET_TOKEN', response.result.user_session)
-        setToken(response.result.user_session)
+        console.log('登录成功', response)
+        commit('SET_TOKEN', response.result.access_token)
+        setToken(response.result.access_token)
         resolve()
       }).catch(error => {
         console.log(error)

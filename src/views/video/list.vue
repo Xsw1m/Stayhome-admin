@@ -98,13 +98,13 @@
 
       <el-table-column label="分类" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <span>{{ scope.row.column_name ? scope.row.column_name : '暂无' }}</span>
+          <span>{{ scope.row.category.name ? scope.row.category.name : '暂无' }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="上传者" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <span>{{ scope.row.author_name ? scope.row.author_name : '未知' }}</span>
+          <span>{{ scope.row.user.name ? scope.row.user.name : '未知' }}</span>
         </template>
       </el-table-column>
 

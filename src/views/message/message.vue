@@ -3,7 +3,7 @@
     <div class="card1">
       <div class="title">系统消息</div>
       <div class="border" />
-      <span class="read aSty" @click="checkallitem">全部标记为已读</span>
+      <!-- <span class="read aSty" @click="checkallitem">全部标记为已读</span> -->
     </div>
     <div class="card2">
       <div v-for="( item,index ) in list" :key="index + 1" class="content" @click="checkitem(item.id)">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { fetchList, allcheckitem, checkitem } from '@/api/message'
+import { fetchList, allcheckitem } from '@/api/message'
 export default {
   filters: {
     status_spot(item) {
@@ -72,12 +72,12 @@ export default {
       })
     },
     checkitem(id) {
-      checkitem(id).then(response => {
-        console.log('已读' + id)
-        console.log(response)
-        this.$store.dispatch('getunfinished')
-        this.getMessage()
-      })
+      // checkitem(id).then(response => {
+      console.log('已读' + id)
+      //   console.log(response)
+      //   this.$store.dispatch('getunfinished')
+      //   this.getMessage()
+      // })
     }
   }
 }

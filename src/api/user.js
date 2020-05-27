@@ -5,7 +5,7 @@ export function login(data) {
     url: '/admin/login',
     method: 'get',
     params: {
-      account: data.username,
+      username: data.username,
       password: data.password
     }
   })

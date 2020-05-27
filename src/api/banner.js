@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/banner/list',
+    url: '/banner',
     method: 'get'
     // params: query
   })
@@ -10,21 +10,21 @@ export function fetchList(query) {
 export function fetchdropdown(query) {
   query.pagesize = query.limit
   return request({
-    url: '/video/list',
+    url: '/admin/video/list',
     method: 'get',
     params: query
   })
 }
 export function deleteItem(id) {
   return request({
-    url: '/banner/delete/' + id,
+    url: '/banner/' + id,
     method: 'delete'
   })
 }
 
 export function createItem(data) {
   return request({
-    url: '/banner/create',
+    url: '/banner',
     method: 'post',
     data
   })

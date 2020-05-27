@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function fetchList(query) {
   query.pagesize = query.limit
   return request({
-    url: '/video/list',
+    url: '/admin/video/list' + '?include=category,user',
     method: 'get',
     params: query
   })

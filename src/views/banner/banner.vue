@@ -80,10 +80,10 @@
           </div> -->
         </el-form-item>
         <el-form-item v-if="layerAudit === 2" label="视频缩略">
-          <video controls :src="temp.url" style="width: 500px" />
+          <video controls :src="temp.video.url" style="width: 500px" />
         </el-form-item>
         <el-form-item v-if="false" label="视频地址">
-          <el-input v-model="temp.url" />
+          <el-input v-model="temp.video.url" />
         </el-form-item>
         <el-form-item label="首页焦点图" prop="cover">
           <SingleImageToAws class="form_upload_cover" :parent-msg="temp.cover" @getImUrl="uploadCover" />
@@ -334,9 +334,9 @@ export default {
       })
     },
     handleUpdate(row, i) {
-      console.log(this.temp)
+      // console.log(this.temp)
       this.temp = Object.assign({}, row) // copy obj
-      console.log(this.temp)
+      console.log('编辑', this.temp)
       this.temp.audit_time = new Date(this.temp.audit_time)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
