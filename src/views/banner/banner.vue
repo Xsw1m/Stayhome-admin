@@ -142,13 +142,13 @@ export default {
   filters: {
     statusFilter_color(status) {
       const statusMap = {
-        1: 'success',
-        2: 'danger'
+        '1': 'success',
+        '2': 'danger'
       }
       return statusMap[status]
     },
     statusFilter_label(status) {
-      return status === 1 ? '已发布' : status === 2 ? '已禁用' : '未知'
+      return status === '1' ? '已发布' : status === '2' ? '已禁用' : '未知'
       // return status === '1' ? '已发布' : '已禁用'
     },
     typeFilter(type) {
