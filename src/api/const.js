@@ -5,7 +5,7 @@ export const statusList = [
   },
   {
     value: 2,
-    label: '正常'
+    label: '审核通过'
   },
   {
     value: 3,
@@ -54,11 +54,11 @@ export const userStatusList = [
 ]
 export const banneristrue = [
   {
-    value: 1,
+    value: '1',
     label: '已允许'
   },
   {
-    value: 2,
+    value: '2',
     label: '已禁用'
   }
 ]

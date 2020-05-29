@@ -197,8 +197,8 @@ export default {
       })
     },
     handleDeleteRow(row) {
-      console.log(this.list.length)
-      if (this.length > 1) {
+      console.log('删除', this.list, this.list.length)
+      if (this.list.length > 1) {
         this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -212,7 +212,7 @@ export default {
                 title: '操作成功',
                 message: '已删除',
                 type: 'success',
-                duration: 2000
+                duration: 1000
               })
             }
           })
@@ -227,7 +227,7 @@ export default {
           title: '禁止删除',
           message: '最后一条不能删除',
           type: 'warning',
-          duration: 2000
+          duration: 1000
         })
       }
     },
@@ -256,12 +256,13 @@ export default {
         if (valid) {
           createItem(qs.stringify(this.temp)).then(response => {
             if (response.code === 200) {
+              this.getList()
               this.dialogFormVisible = false
               this.$notify({
                 title: 'Success',
                 message: 'Created Successfully',
                 type: 'success',
-                duration: 2000
+                duration: 1000
               })
             }
           })
@@ -291,18 +292,20 @@ export default {
           // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateItem(qs.stringify(tempData), this.temp.id).then(response => {
             if (response.code === 200) {
+              this.getList()
               this.dialogFormVisible = false
               this.$notify({
                 title: '操作成功',
                 message: '资料已更新',
                 type: 'success',
-                duration: 2000
+                duration: 1000
               })
             }
+          }).catch((err) => {
+            console.log('出错了', err)
           })
         }
       })
-      this.getList()
     }
 
   }

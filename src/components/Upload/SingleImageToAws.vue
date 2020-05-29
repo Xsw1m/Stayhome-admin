@@ -8,7 +8,7 @@
     action="customize"
   >
     <img v-if="imageUrl" :src="imageUrl" class="avatar">
-    <!-- <img v-if="imgshow" :src="parentMsg" class="avatar"> -->
+    <!-- <img v-if="parentMsg" :src="parentMsg" class="avatar"> -->
     <i v-else class="el-icon-plus avatar-uploader-icon" />
   </el-upload>
 </template>
@@ -33,16 +33,18 @@ export default {
   },
   watch: {
     imageUrl(newval, oldval) {
+      console.log('获取编辑banner图片', newval, oldval)
       this.$emit('getImUrl', newval)
     },
     parentMsg(newval, oldval) {
+      console.log('从父组件传来图片1', newval, oldval)
       this.imageUrl = newval
     }
   },
-  // mounted() {
-  //   this.imageUrl = this.parentMsg
-  //   console.log(this.imageUrl)
-  // }, // 把父组件传递过来的  parentMsg  属性，
+  mounted() {
+    this.imageUrl = this.parentMsg
+    console.log('从父组件传来图片2', this.imageUrl)
+  }, // 把父组件传递过来的  parentMsg  属性，
   methods: {
     handleAvatarSuccess(res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw);

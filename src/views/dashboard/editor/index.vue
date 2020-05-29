@@ -8,7 +8,7 @@
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" /> -->
       <div class="info-container">
         <span class="display_name">{{ name }}</span>
-        <span style="font-size:20px;padding-top:20px;display:inline-block;">欢迎来到超管后台♥</span>
+        <span style="font-size:20px;padding-top:20px;display:inline-block;">欢迎来到超管后台123♥</span>
       </div>
     </div>
     <div>
@@ -21,7 +21,13 @@
 import { mapGetters } from 'vuex'
 // import PanThumb from '@/components/PanThumb'
 // import GithubCorner from '@/components/GithubCorner'
-
+function a(x) {
+  return function(y) {
+    return x + y
+  }
+}
+var b = a(2)
+alert(b(3))
 export default {
   name: 'DashboardEditor',
   // components: { PanThumb, GithubCorner },

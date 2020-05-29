@@ -2,21 +2,21 @@ import request from '@/utils/request'
 
 export function fetchList() {
   return request({
-    url: '/admin/list',
+    url: '/admin',
     method: 'get'
   })
 }
 
 export function fetchItem(id) {
   return request({
-    url: '/admin/details/' + id,
+    url: '/admin/' + id,
     method: 'get'
   })
 }
 
 export function createItem(data) {
   return request({
-    url: '/admin/create',
+    url: '/admin',
     method: 'post',
     data
   })
@@ -24,8 +24,8 @@ export function createItem(data) {
 
 export function updateItem(data, id) {
   return request({
-    url: '/admin/update/' + id,
-    method: 'put',
+    url: '/admin/' + id,
+    method: 'patch',
     data
   })
 }
@@ -39,7 +39,7 @@ export function auditItem(data, id) {
 }
 export function deleteItem(id) {
   return request({
-    url: '/admin/delete/' + id,
+    url: '/admin/' + id,
     method: 'delete'
   })
 }

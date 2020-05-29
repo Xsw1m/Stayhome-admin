@@ -4,13 +4,13 @@
       <div style="margin-bottom:0.5%;">
         <el-input v-model="listQuery.title" placeholder="标题" style="width: 12%;" class="filter-item" @keyup.enter.native="handleFilter" />
         <el-input v-model="listQuery.real_name" placeholder="上传者" style="width: 6%;" class="filter-item" @keyup.enter.native="handleFilter" />
-        <el-input v-model="listQuery.phone" placeholder="手机号" style="width: 8%;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <!-- <el-input v-model="listQuery.phone" placeholder="手机号" style="width: 8%;" class="filter-item" @keyup.enter.native="handleFilter" /> -->
         <el-select v-model="listQuery.status" placeholder="审核状态" clearable style="width: 7%" class="filter-item">
           <el-option key="0" label="全部" value="0" />
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-        <el-select v-model="listQuery.column_id" filterable placeholder="分类" clearable style="width: 7%" class="filter-item">
-          <el-option v-for="item in columnOptions" :key="item.id" :label="item.column_name" :value="item.id" />
+        <el-select v-model="listQuery.category_id" filterable placeholder="分类" clearable style="width: 7%" class="filter-item">
+          <el-option v-for="item in columnOptions" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
         <!--<el-input v-model="listQuery.column_name" placeholder="分类" style="width: 120px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
         <el-date-picker
@@ -41,9 +41,9 @@
         <el-button v-waves class="filter-item" type="primary" size="mini" icon="el-icon-search" @click="handleFilter">
           检索
         </el-button>
-        <el-button class="filter-item" style="margin-left: 5px;" type="success" size="mini" icon="el-icon-edit" @click="handleCreate(1)">
+        <!-- <el-button class="filter-item" style="margin-left: 5px;" type="success" size="mini" icon="el-icon-edit" @click="handleCreate(1)">
           补录
-        </el-button>
+        </el-button> -->
         <!--<el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
         <!--Export-->
         <!--</el-button>-->
@@ -110,15 +110,15 @@
 
       <el-table-column v-if="showMore" label="手机号" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.phone | phoneFilter }}</span>
+          <span>{{ scope.row.user.phone | phoneFilter }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column v-if="showMore" label="所属小微" align="center" :show-overflow-tooltip="true">
+      <!-- <el-table-column v-if="showMore" label="所属小微" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <span>{{ scope.row.group_name ? scope.row.group_name : '未知' }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="审核状态" width="100" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
@@ -127,16 +127,18 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="能否发布精选" width="100" align="center" :show-overflow-tooltip="true">
+      <!-- <el-table-column label="能否发布精选" width="100" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <el-tag :type="scope.row.admin_recommend_jurisdiction | recommend_jurisdiction_color">
             {{ scope.row.admin_recommend_jurisdiction | recommend_jurisdiction }}
           </el-tag>
         </template>
-      </el-table-column>
-      <el-table-column label="深度储存" width="80" align="center">
+      </el-table-column> -->
+      <el-table-column label="可转载" width="80" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.storage_class | storage_class }}</span>
+          <el-tag :type="scope.row.transfer | storage_class_color">
+            {{ scope.row.transfer | storage_class }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="权重" width="80" align="center">
@@ -153,22 +155,22 @@
 
       <el-table-column v-if="showMore" label="审核时间" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.audit_time ? scope.row.audit_time : '-' }}</span>
+          <span>{{ scope.row.updated_at ? scope.row.updated_at : '-' }}</span>
         </template>
       </el-table-column>
 
       <el-table-column v-if="showMore" label="转码" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.url }}</span>
-          <el-button type="primary" plain size="mini" :disabled="scope.row.url === ''?false:true" @click="transcoding(scope.row.source_url)">转码</el-button>
+          <!--<el-button type="primary" plain size="mini" :disabled="scope.row.url === ''?false:true" @click="transcoding(scope.row.source_url)">转码</el-button> -->
         </template>
       </el-table-column>
-      <el-table-column v-if="showMore" label="原始路径" align="center">
+      <!-- <el-table-column v-if="showMore" label="原始路径" align="center">
         <template slot-scope="scope">
-          <!-- <span>{{ scope.row.union_id }}</span> -->
+           <span>{{ scope.row.union_id }}</span>
           <el-button type="info" plain size="mini" @click="checkurl(scope.row.union_id)">查看</el-button>
         </template>
-      </el-table-column>
+      </el-table-column>-->
 
       <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
@@ -192,8 +194,8 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogClassVisible" width="800">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 100%;">
         <el-form-item label="视频分类" prop="column_name">
-          <el-select v-model="temp.column_id" filterable placeholder="分类" clearable style="width: 50%" class="filter-item">
-            <el-option v-for="item in columnOptions" :key="item.column_id" :label="item.column_name" :value="item.id" />
+          <el-select v-model="temp.category_id" filterable placeholder="分类" clearable style="width: 50%" class="filter-item">
+            <el-option v-for="item in columnOptions" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <hr>
@@ -211,7 +213,7 @@
     <el-dialog
       title="查看原始路径"
       :visible.sync="dialogUrlVisible"
-      width="1000px"
+      width="1200px"
       :before-close="Urldialogclose"
     >
       <el-form label-position="left" label-width="100" style="width: 100%;">
@@ -284,8 +286,8 @@
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="视频分类" prop="column_name">
               <!-- [()?true:false] -->
-              <el-select v-model="temp.column_id" :disabled="isClassify" filterable placeholder="分类" clearable style="width: 100%" class="filter-item">
-                <el-option v-for="item in columnOptions" :key="item.column_id" :label="item.column_name" :value="item.id" />
+              <el-select v-model="temp.category_id" filterable placeholder="分类" clearable style="width: 100%" class="filter-item">
+                <el-option v-for="item in columnOptions" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -329,11 +331,11 @@
               <p>尺寸: 564px x 332px</p>
               <!--<el-input v-model="temp.cover" :disabled="layerAudit" />-->
             </el-form-item>
-            <el-form-item v-if="layerAudit != 1" label="观看权限" prop="user_watch_jurisdiction" style="margin-top: 120px">
+            <!-- <el-form-item v-if="layerAudit != 1" label="观看权限" prop="user_watch_jurisdiction" style="margin-top: 120px">
               <el-select v-model="temp.user_watch_jurisdiction" :disabled="(layerAudit === 3 || layerAudit === 1)?true:false" placeholder="分类" clearable style="width: 100%" class="filter-item">
                 <el-option v-for="item in userWatchJurisdictionOptions" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item v-if="layerAudit != 1" label="竖版封面" prop="cover_s">
@@ -350,13 +352,13 @@
           </el-col>
 
         </el-row>
-        <!--非审核功能不显示审核区-->
+        <!--非审核功能不显示审核区
         <hr>
         <div v-if="layerAudit === 2 && temp.status === 2">
           <el-form-item label="权重排序位" prop="weight">
             <el-input-number v-model="temp.weight" :min="0" :max="5" label="描述文字" />
           </el-form-item>
-        </div>
+        </div>-->
         <div v-if="layerAudit === 3">
           <el-form-item label="审核状态" prop="status">
             <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
@@ -364,9 +366,9 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="审核理由" prop="audit_explain">
+          <el-form-item label="审核理由" prop="audit_feedback">
             <el-input
-              v-model="temp.audit_explain"
+              v-model="temp.audit_feedback"
               type="textarea"
               placeholder="填写视频视频描述"
               maxlength="30"
@@ -374,12 +376,15 @@
             />
 
           </el-form-item>
-          <el-form-item v-if=" temp.admin_recommend_jurisdiction === 1 && temp.status === 2" label="发布精选" prop="cover">
+          <!-- <el-form-item v-if=" temp.status === 2" label="发布精选" prop="cover">
             <el-radio v-model="isFirstPage" label="0">不发布</el-radio>
             <el-radio v-model="isFirstPage" label="1">发布</el-radio>
           </el-form-item>
-          <el-form-item v-if=" temp.admin_recommend_jurisdiction === 1 && temp.status === 2" v-show="isFirstPage === '1'" label="精选排序位" prop="first_page">
+          <el-form-item v-if=" temp.status === 2" label="精选排序位" prop="first_page">
             <el-input-number v-model="temp.first_page" :min="1" :max="5" label="描述文字" />
+          </el-form-item>-->
+          <el-form-item label="权重排序位" prop="weight">
+            <el-input-number v-model="temp.weight" :min="0" :max="5" label="描述文字" />
           </el-form-item>
         </div>
       </el-form>
@@ -434,7 +439,14 @@ export default {
   directives: { waves },
   filters: {
     storage_class(status) {
-      return status === 0 ? '正常' : 'Glacier'
+      return status === 1 ? '可以' : '不可以'
+    },
+    storage_class_color(status) {
+      const statusMap = {
+        1: 'success',
+        2: 'danger'
+      }
+      return statusMap[status]
     },
     statusFilter(status) {
       const statusMap = []
@@ -487,12 +499,12 @@ export default {
         real_name: undefined,
         phone: undefined,
         status: undefined,
-        column_id: undefined,
+        category_id: undefined,
         begin_time: undefined,
         end_time: undefined,
         type: undefined,
         url: undefined,
-        audit_explain: undefined,
+        audit_feedback: undefined,
         sort: '+id'
       },
       originalpath: [],
@@ -507,9 +519,8 @@ export default {
       isFirstPage: '0',
       temp: {
         remark: '',
-        admin_recommend_jurisdiction: 1,
         column_name: '',
-        column_id: '',
+        category_id: '',
         cover: '',
         cover_s: '',
         first_page: 0,
@@ -522,7 +533,7 @@ export default {
         status: 1,
         title: '',
         url: '',
-        audit_explain: '',
+        audit_feedback: '',
         user_watch_jurisdiction: 1,
         weight: 0
       },
@@ -571,12 +582,15 @@ export default {
       this.temp.cover_s = data
     },
     getColumnList() {
+      console.log('查看视频分类')
       fetchColumList().then(response => {
-        this.columnOptions = response.result
+        this.columnOptions = response.result[0]
+        console.log('视频分类', this.columnOptions)
       })
     },
     getList() {
       this.listLoading = true
+      console.log('重新获取列表1', this.listQuery)
       fetchList(this.listQuery).then(response => {
         if (response.code === 200) {
           console.log('重新获取一次列表')
@@ -615,9 +629,9 @@ export default {
         delete this.listQuery.begin_length
         delete this.listQuery.end_length
       }
-      if (this.listQuery.status === '0' || this.listQuery.column_id === '' || this.listQuery.status === '') {
+      if (this.listQuery.status === '0' || this.listQuery.category_id === '' || this.listQuery.status === '') {
         delete this.listQuery.status
-        delete this.listQuery.column_id
+        delete this.listQuery.category_id
       }
       this.getList()
     },
@@ -664,7 +678,6 @@ export default {
           this.batchlist.forEach(item => {
             const tempData = Object.assign({}, this.temp)
             delete tempData.remark
-            delete tempData.admin_recommend_jurisdiction
             delete tempData.column_name
             delete tempData.cover
             delete tempData.cover_s
@@ -676,23 +689,23 @@ export default {
             delete tempData.shooting_province
             delete tempData.shooting_time
             delete tempData.status
-            delete tempData.audit_explain
+            delete tempData.audit_feedback
             delete tempData.user_watch_jurisdiction
             delete tempData.title
             delete tempData.url
             updateItem(qs.stringify(tempData), item.id).then(response => {
               if (response.code === 200) {
                 console.log('提交成功')
+                this.getList()
+                this.dialogClassVisible = false
               }
             })
           })
-          this.getList()
-          this.dialogClassVisible = false
           this.$notify({
             title: '操作成功',
             message: '资料已更新',
             type: 'success',
-            duration: 2000
+            duration: 1000
           })
         }
       })
@@ -763,7 +776,7 @@ export default {
     //     status: 1,
     //     title: '',
     //     url: '',
-    //     audit_explain: '',
+    //     audit_feedback: '',
     //     user_watch_jurisdiction: 1
     //   }
     // },
@@ -787,9 +800,8 @@ export default {
     resetTemp() {
       this.temp = {
         remark: '',
-        admin_recommend_jurisdiction: 1,
         column_name: '',
-        column_id: '',
+        category_id: '',
         cover: '',
         cover_s: '',
         first_page: 0,
@@ -802,7 +814,7 @@ export default {
         status: 1,
         title: '',
         url: '',
-        audit_explain: '',
+        audit_feedback: '',
         user_watch_jurisdiction: 1
       }
     },
@@ -814,7 +826,6 @@ export default {
           //       this.temp.author = 'vue-element-admin'
           const tempData = Object.assign({}, this.temp)
           delete tempData.remark
-          delete tempData.admin_recommend_jurisdiction
           delete tempData.column_name
           delete tempData.cover
           delete tempData.cover_s
@@ -826,7 +837,7 @@ export default {
           delete tempData.shooting_province
           delete tempData.shooting_time
           delete tempData.status
-          delete tempData.audit_explain
+          delete tempData.audit_feedback
           delete tempData.user_watch_jurisdiction
           createItem(qs.stringify(tempData)).then(() => {
             this.dialogFormVisible = false
@@ -847,7 +858,7 @@ export default {
       // axios调取每个具体视频信息
       fetchItem(row.id).then(response => {
         this.temp = Object.assign({}, response.result)
-        // console.log('测试权限信息')
+        console.log('查看信息详细', this.temp)
         // console.log(this.temp.admin_classify_jurisdiction)
       })
       //
@@ -859,11 +870,14 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          console.log('提交修改前的信息1', this.temp)
           const tempData = Object.assign({}, this.temp)
-          console.log(tempData)
           delete tempData.status
-          delete tempData.audit_explain
+          delete tempData.column_id
+          delete tempData.column_name
+          delete tempData.audit_feedback
           delete tempData.first_page
+          console.log('提交修改后的信息2', tempData)
           // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateItem(qs.stringify(tempData), this.temp.id).then(response => {
             if (response.code === 200) {
@@ -888,8 +902,9 @@ export default {
       //   if (valid) {
       const tempData = qs.stringify({
         'status': this.temp.status,
-        'audit_explain': this.temp.audit_explain,
-        'first_page': this.isFirstPage > 0 ? this.temp.first_page : 0
+        'audit_feedback': this.temp.audit_feedback,
+        'weight': this.temp.weight
+        // 'first_page': this.isFirstPage > 0 ? this.temp.first_page : 0
       })
       console.log(tempData)
       // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464

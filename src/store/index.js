@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
-import { fetchTable } from '@/api/download'
+// import { fetchTable } from '@/api/download'
 import { fetchMessage } from '@/api/message'
 
 Vue.use(Vuex)

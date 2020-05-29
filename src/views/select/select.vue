@@ -9,7 +9,7 @@
           <el-option key="0" label="全部" value="0" />
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-        <el-select v-model="listQuery.column_id" filterable placeholder="分类" clearable style="width: 7%" class="filter-item">
+        <el-select v-model="listQuery.category_id" filterable placeholder="分类" clearable style="width: 7%" class="filter-item">
           <el-option v-for="item in columnOptions" :key="item.id" :label="item.column_name" :value="item.id" />
         </el-select>
         <el-date-picker

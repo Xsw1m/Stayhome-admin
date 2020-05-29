@@ -2,10 +2,28 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   query.pagesize = query.limit
+  // query.filter[title] = query.title
+  let params = {
+    'page': query.page,
+    'sort': query.sort,
+    'pagesize': query.pagesize,
+    'audit_explain': query.audit_explain,
+    'importance': query.importance,
+    'real_name': query.real_name,
+    'type': query.type,
+    'url': query.url,
+    'filter[title]': query.title,
+    'filter[category_id]': query.category_id,
+    'filter[status]': query.status,
+    'filter[begin_time]': query.begin_time,
+    'filter[end_time]': query.end_time,
+    'filter[begin_length]': query.begin_length,
+    'filter[end_length]': query.end_length 
+  }
   return request({
     url: '/admin/video/list' + '?include=category,user',
     method: 'get',
-    params: query
+    params: params
   })
 }
 
@@ -27,7 +45,7 @@ export function createItem(data) {
 export function updateItem(data, id) {
   return request({
     url: '/video/update/' + id,
-    method: 'put',
+    method: 'patch',
     data
   })
 }
@@ -35,7 +53,7 @@ export function updateItem(data, id) {
 export function auditItem(data, id) {
   return request({
     url: '/video/audit/' + id,
-    method: 'put',
+    method: 'patch',
     data
   })
 }

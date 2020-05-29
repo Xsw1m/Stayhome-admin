@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column label="审核时间" width="200" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.audit_time }}</span>
+          <span>{{ scope.row.updated_at }}</span>
           <!-- | parseTime('{y}-{m}-{d} {h}:{i}')  -->
         </template>
       </el-table-column>
@@ -187,13 +187,13 @@ export default {
       banneristrueoption: [],
       temp: {
         id: 2,
-        url: '',
+        video_id: '',
         weight: 0,
         cover: '',
         title: '',
         introduction: '',
         status: 1,
-        audit_time: new Date()
+        updated_at: new Date()
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -205,7 +205,7 @@ export default {
       pvData: [],
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        audit_time: [{ type: 'date', required: true, message: 'audit_time is required', trigger: 'change' }],
+        updated_at: [{ type: 'date', required: true, message: 'updated_at is required', trigger: 'change' }],
         title: [{ required: true, message: 'title is required', trigger: 'blur' }]
       },
       downloadLoading: false
@@ -255,10 +255,10 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    push(title, url) {
-      console.log('url：' + url)
+    push(title, video_id) {
+      console.log('video_id：' + video_id)
       this.temp.title = title
-      this.temp.url = url
+      this.temp.video_id = video_id
     },
     focus() {
       // console.log('聚焦')
@@ -288,7 +288,7 @@ export default {
     resetTemp() {
       this.temp = {
         id: 2,
-        url: '',
+        video_id: '',
         weight: 0,
         cover: '',
         title: '',
@@ -297,7 +297,7 @@ export default {
       }
     },
     handleCreate(j) {
-      this.temp.audit_time = new Date(this.temp.audit_time)
+      this.temp.updated_at = new Date(this.temp.updated_at)
       console.log(this.temp)
       this.resetTemp()
       this.dialogStatus = 'create'
@@ -311,15 +311,14 @@ export default {
       console.log('createData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log(this.temp)
+          console.log('添加banner:', this.temp)
           const tempData = Object.assign({}, this.temp)
           delete tempData.id
           delete tempData.weight
           delete tempData.introduction
-          delete tempData.audit_time
+          delete tempData.updated_at
           createItem(qs.stringify(tempData)).then(() => {
-            console.log('提交成功')
-            console.log(tempData)
+            console.log('提交成功', tempData)
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.getTable()
@@ -329,33 +328,37 @@ export default {
               type: 'success',
               duration: 2000
             })
+          }).catch((err) => {
+            console.log('出错了！', err)
           })
         }
       })
     },
     handleUpdate(row, i) {
-      // console.log(this.temp)
+      console.log('编辑1', row, this.temp)
       this.temp = Object.assign({}, row) // copy obj
-      console.log('编辑', this.temp)
-      this.temp.audit_time = new Date(this.temp.audit_time)
+      console.log('编辑2', this.temp)
+      this.temp.updated_at = new Date(this.temp.updated_at)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       // 判断不通过理由是否 隐藏
       this.layerAudit = i
     },
     updateData() {
-      console.log('updateData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log(this.temp)
+          console.log('updateData1', this.temp)
           const tempData = Object.assign({}, this.temp)
           delete tempData.id
           delete tempData.weight
+          delete tempData.created_at
+          delete tempData.title
+          delete tempData.video
           delete tempData.introduction
-          delete tempData.audit_time
+          delete tempData.updated_at
+          console.log('updateData2', tempData)
           updateItem(qs.stringify(tempData), this.temp.id).then(() => {
-            console.log('提交成功')
-            console.log(tempData)
+            console.log('提交成功', tempData)
             this.dialogFormVisible = false
             this.getTable()
             this.$notify({
