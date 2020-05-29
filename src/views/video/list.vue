@@ -347,7 +347,7 @@
 
           <el-col :span="24">
             <el-form-item v-if="layerAudit != 1" label="视频缩略">
-              <video controls :src="temp.url" style="width: 500px" />
+              <video id="video" controls :src="temp.url" style="width: 400px;height: 225px;" />
             </el-form-item>
           </el-col>
 
@@ -389,18 +389,18 @@
         </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
+        <el-button @click="dialogFormVisible = false, videopause()">
           取消
         </el-button>
         <!--<el-button v-if="!layerAudit" type="primary" @click="dialogStatus==='create'?createData():updateData()">-->
 
-        <el-button v-if="layerAudit === 2" type="primary" @click="updateData()">
+        <el-button v-if="layerAudit === 2" type="primary" @click="updateData(), videopause()">
           提交
         </el-button>
-        <el-button v-if="layerAudit === 3" type="primary" @click="auditData()">
+        <el-button v-if="layerAudit === 3" type="primary" @click="auditData(), videopause()">
           审核
         </el-button>
-        <el-button v-if="layerAudit === 1" type="success" @click="createData()">
+        <el-button v-if="layerAudit === 1" type="success" @click="createData(), videopause()">
           添加
         </el-button>
       </div>
@@ -575,6 +575,10 @@ export default {
     this.getColumnList()
   },
   methods: {
+    videopause() {
+      const video = document.getElementById('video')
+      video.pause()
+    },
     uploadCover(data) {
       this.temp.cover = data
     },

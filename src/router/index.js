@@ -206,13 +206,13 @@ export const asyncRoutes = [
         component: () => import('@/views/video/list'),
         name: 'videoList',
         meta: { title: '全部视频', icon: 'list' }
-      },
-      {
-        path: 'select',
-        component: () => import('@/views/select/select'),
-        name: 'select',
-        meta: { title: '精选列表', icon: 'drag' }
       }
+      // {
+      //   path: 'select',
+      //   component: () => import('@/views/select/select'),
+      //   name: 'select',
+      //   meta: { title: '精选列表', icon: 'drag' }
+      // }
       // {
       //   path: 'audit/show',
       //   component: () => import('@/views/audit/show'),

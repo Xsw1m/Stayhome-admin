@@ -10,51 +10,55 @@
       style="width: 100%;"
     >
       <el-table-column label="序号" prop="id" sortable="custom" align="center" width="80">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
+        <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="名称" min-width="120px">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
-          <span>{{ scope.row.real_name }}</span>
+      <el-table-column label="名称" width="100">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="手机号" align="center">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
+        <template slot-scope="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="邮箱" align="center">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
+        <template slot-scope="scope">
           <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="所属小微" align="center">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
-          <span>{{ scope.row.group_name }}</span>
+      <el-table-column label="头像" align="center">
+        <template slot-scope="scope">
+          <img :src="scope.row.avatar" style="width: 75px;heiht:75px;border-radius: 100%;">
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
-          <span>{{ scope.row.status | statusFilter }}</span>
+      <el-table-column label="性别" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.gender | statusFilter }}</span>
         </template>
       </el-table-column>
-
+      <el-table-column label="生日" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.birthday }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="新建时间" align="center">
-        <template v-if="scope.row.id> 2" slot-scope="scope">
-          <span>{{ scope.row.created_at ? scope.row.created_at : '-' }}</span>
+        <template slot-scope="scope">
+          <span>{{ scope.row.created_at }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template v-if="row.id> 2" slot-scope="{row}">
+        <template slot-scope="{row}">
           <!--<el-button type="primary" size="mini" @click="handleUpdate(row)">-->
           <!--修改-->
-          <!--</el-button>-->
+          <!--</el-button>
           <el-button type="primary" size="mini" @click="handleAudit(row)">
             审核
-          </el-button>
+          </el-button>-->
           <el-button v-if="row.status!=='3'" size="mini" type="danger" @click="handleDeleteRow(row)">
             删除
           </el-button>
@@ -104,9 +108,9 @@ export default {
   components: { Pagination },
   filters: {
     statusFilter(status) {
-      const statusMap = []
-      for (let i = 0; i < userStatusList.length; i++) {
-        statusMap[userStatusList[i]['value']] = userStatusList[i]['label']
+      const statusMap = {
+        2: '男',
+        3: '女'
       }
       return statusMap[status]
     }
@@ -187,6 +191,7 @@ export default {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         if (response.code === 200) {
+          console.log('获取全部用户：', response.result)
           this.list = response.result.list
           this.total = response.result.total
           // this.list = response.result.list.splice(2)
@@ -341,4 +346,9 @@ export default {
   .filter-container .filter-item { margin-bottom: 0}
   .form_upload_cover img {width: 282px; height: 166px;}
   .form_upload_cover_s img {width: 282px; height: 346px;}
+  .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
