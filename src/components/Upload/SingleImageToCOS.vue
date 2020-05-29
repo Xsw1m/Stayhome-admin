@@ -112,7 +112,7 @@ export default {
       cos.putObject({
         Bucket: 'stayhomehub-1258210079', /* 必须 */
         Region: 'ap-beijing', /* 存储桶所在地域，必须字段 */
-        Key: 'admin/' + fileName, /* 必须 */
+        Key: 'banner/' + fileName, /* 必须 */
         StorageClass: 'STANDARD',
         Body: params.file, // 上传文件对象
         onProgress: function(progressData) { /* 非必须 */

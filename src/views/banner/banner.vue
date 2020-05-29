@@ -120,7 +120,7 @@ import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import { banneristrue } from '@/api/const'
 // import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import SingleImageToAws from '@/components/Upload/SingleImageToAws.vue'
+import SingleImageToAws from '@/components/Upload/SingleImageToCOS.vue'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
