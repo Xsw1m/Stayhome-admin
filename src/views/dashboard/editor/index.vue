@@ -21,13 +21,13 @@
 import { mapGetters } from 'vuex'
 // import PanThumb from '@/components/PanThumb'
 // import GithubCorner from '@/components/GithubCorner'
-function a(x) {
-  return function(y) {
-    return x + y
-  }
-}
-var b = a(2)
-alert(b(3))
+// function a(x) {
+//   return function(y) {
+//     return x + y
+//   }
+// }
+// var b = a(2)
+// alert(b(3))
 export default {
   name: 'DashboardEditor',
   // components: { PanThumb, GithubCorner },

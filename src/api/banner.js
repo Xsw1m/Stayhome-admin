@@ -33,7 +33,7 @@ export function createItem(data) {
 export function updateItem(data, id) {
   console.log('提交banner修改', data)
   return request({
-    url: '/banner/update/' + id,
+    url: '/banner/' + id,
     method: 'patch',
     data
   })

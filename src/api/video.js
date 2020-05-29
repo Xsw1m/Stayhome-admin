@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function fetchList(query) {
   query.pagesize = query.limit
   // query.filter[title] = query.title
-  let params = {
+  const params = {
     'page': query.page,
     'sort': query.sort,
     'pagesize': query.pagesize,
@@ -18,7 +18,7 @@ export function fetchList(query) {
     'filter[begin_time]': query.begin_time,
     'filter[end_time]': query.end_time,
     'filter[begin_length]': query.begin_length,
-    'filter[end_length]': query.end_length 
+    'filter[end_length]': query.end_length
   }
   return request({
     url: '/admin/video/list' + '?include=category,user',

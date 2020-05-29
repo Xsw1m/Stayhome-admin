@@ -83,8 +83,8 @@
 
         <el-form-item v-show="true" label="状态" prop="admin_type">
           <el-select v-model="temp.admin_type" class="filter-item" placeholder="Please select">
-            <el-option key="1" label="超级管理员" value="1" />
-            <el-option key="2" label="管理员" value="2" />
+            <el-option :key="1" label="超级管理员" :value="1" />
+            <el-option :key="2" label="管理员" :value="2" />
           </el-select>
         </el-form-item>
 
@@ -271,7 +271,7 @@ export default {
     },
     handleUpdate(row) {
       // this.temp = Object.assign({}, row) // copy obj
-
+      console.log('修改', row)
       fetchItem(row.id).then(response => {
         this.temp = Object.assign({}, response.result)
         delete this.temp.password

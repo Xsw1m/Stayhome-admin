@@ -192,7 +192,7 @@ export default {
         cover: '',
         title: '',
         introduction: '',
-        status: 1,
+        status: '1',
         updated_at: new Date()
       },
       dialogFormVisible: false,
@@ -293,7 +293,7 @@ export default {
         cover: '',
         title: '',
         introduction: '',
-        status: 1
+        status: '1'
       }
     },
     handleCreate(j) {

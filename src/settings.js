@@ -1,5 +1,5 @@
 module.exports = {
-  title: '视频库 超级管理员',
+  title: 'StayHomeHub 超级管理员',
 
   /**
    * @type {boolean} true | false

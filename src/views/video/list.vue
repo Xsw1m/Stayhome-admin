@@ -59,9 +59,9 @@
         <el-button v-if="changeMore" class="filter-item" style="margin-left: 5px;" type="danger" size="mini" icon="el-icon-delete" @click="handleDeleteMore(batchlist)">
           批量删除
         </el-button>
-        <el-button v-if="changeMore" class="filter-item" style="margin-left: 5px;" type="success" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddMore(batchlist)">
+        <!-- <el-button v-if="changeMore" class="filter-item" style="margin-left: 5px;" type="success" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddMore(batchlist)">
           批量填入
-        </el-button>
+        </el-button>-->
       </div>
     </div>
 
@@ -174,9 +174,9 @@
 
       <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="success" size="mini" @click="handleAdd(row)">
+          <!-- <el-button type="success" size="mini" @click="handleAdd(row)">
             填入
-          </el-button>
+          </el-button> -->
           <el-button type="primary" size="mini" @click="handleUpdate(row,2)">
             修改
           </el-button>
