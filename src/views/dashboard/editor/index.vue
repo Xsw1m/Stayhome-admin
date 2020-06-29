@@ -28,6 +28,50 @@ import { mapGetters } from 'vuex'
 // }
 // var b = a(2)
 // alert(b(3))
+// for (var j = 0; j< 5; j++) {
+//   setTimeout(function() {
+//     console.log(j)
+//   }, 1000)
+// }
+// (function a() {
+//   for (var i = 0; i < 10; i++) {
+//     (function(j) {
+//       setTimeout(function() {
+//         console.log(j)
+//       }, 1000)
+//     })(i)
+//   }
+// })()
+// const str = `hel  lo
+//     ith eima
+// itca st
+// `
+// console.log(str)
+// console.log(i)
+// var obj = {
+//   message: 'My name is: '
+// }
+
+// function getName(firstName, lastName) {
+//   console.log(this.message + firstName + ' ' + lastName)
+// }
+
+// getName.call(obj, 'Dot', 'Dolby')
+// var p1 = new Promise(function(resolve, reject) {
+//   resolve('Success');
+// });
+
+// p1.then(function(value) {
+//   console.log(value); // "Success!"
+//   throw 'oh, no!';
+// }).catch(function(e) {
+//   console.log(e); // "oh, no!"
+// }).then(function(){
+//   console.log('after a catch the chain is restored');
+// }, function () {
+//   console.log('Not fired due to the catch');
+// });
+
 export default {
   name: 'DashboardEditor',
   // components: { PanThumb, GithubCorner },

@@ -8,11 +8,16 @@ export function fetchList(query) {
   })
 }
 export function fetchdropdown(query) {
-  query.pagesize = query.limit
+  const params = {
+    'page': query.page,
+    'pagesize': query.limit,
+    'filter[title]': query.title,
+    'sort': query.sort
+  }
   return request({
     url: '/admin/video/list',
     method: 'get',
-    params: query
+    params: params
   })
 }
 export function deleteItem(id) {
